@@ -11,6 +11,9 @@ LAN latency is between 200 and 300 milliseconds.
 * Qt5.12.9
 * FFmpeg4.3.1 64bit
 
+### software installer
+[MoMoPlayer instaler](https://pan.baidu.com/s/1QLB-aK_1oHehK__cN50GTQ) 
+Fetch Code：1lzc
 
 # 梦梦播放器
 简单的RTSP播放器
@@ -24,6 +27,10 @@ windows平台，纯视频流播放，暂不支持音频。
 * VS2017
 * Qt5.12.9
 * FFmpeg4.3.1 64位
+
+### 软件安装包
+[MoMoPlayer安装包](https://pan.baidu.com/s/1QLB-aK_1oHehK__cN50GTQ) 
+提取码：1lzc
 
 ### Features Snapshot Below：
 ### 效果图
