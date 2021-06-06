@@ -1,0 +1,17 @@
+<RCC>
+  <qresource prefix="/">
+    <file>logo.ico</file>
+    <file>pause_focus.png</file>
+    <file>start_focus.png</file>
+    <file>stop_focus.png</file>
+    <file>appbar.close.png</file>
+    <file>appbar.app.png</file>
+    <file>appbar.minus.png</file>
+    <file>start_normal.png</file>
+    <file>closeBtn2_2x.png</file>
+    <file>logo.png</file>
+    <file>pause_normal.png</file>
+    <file>stop_normal.png</file>
+    <file>appbar.fullscreen.box.png</file>
+  </qresource>
+</RCC>

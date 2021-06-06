@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{a86f3ee7-d808-4cf5-b434-162f2f4e1645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\FramelessHelper">
+      <UniqueIdentifier>{b5847139-81f1-43b3-9f94-925c888b925f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\FramelessHelper\Kernels">
+      <UniqueIdentifier>{10149ccf-15cf-415b-94a5-e41eae662e9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app">
+      <UniqueIdentifier>{e4ab5700-ac61-45db-86c7-27aa3753182a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="player">
+      <UniqueIdentifier>{05d32d5b-c8ce-409d-995e-1bf5db2eb1fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\CMessageBox">
+      <UniqueIdentifier>{cca2ccdf-2924-427a-9d2e-78b03ee6a15a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\common\FramelessHelper\FramelessHelper.cpp">
+      <Filter>common\FramelessHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\FramelessHelper\Kernels\NativeWindowFilter.cpp">
+      <Filter>common\FramelessHelper\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\FramelessHelper\Kernels\NativeWindowHelper.cpp">
+      <Filter>common\FramelessHelper\Kernels</Filter>
+    </ClCompile>
+    <ClCompile Include="app\main.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\MainWin.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="app\MomoPlayer.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="player\DecodeWorker.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\PlayerControler.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="player\RenderWorker.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Database.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\GlobalConfig.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\GlobalSignalSlot.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\util.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\VAUtil.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CMessageBox\CConfirmBox.cpp">
+      <Filter>common\CMessageBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CMessageBox\CInfoBox.cpp">
+      <Filter>common\CMessageBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CMessageBox\CMessageBox.cpp">
+      <Filter>common\CMessageBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\CMessageBox\IMessageBox.cpp">
+      <Filter>common\CMessageBox</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="..\common\FramelessHelper\FramelessHelper.h">
+      <Filter>common\FramelessHelper</Filter>
+    </QtMoc>
+    <QtMoc Include="..\common\FramelessHelper\Kernels\NativeWindowHelper.h">
+      <Filter>common\FramelessHelper\Kernels</Filter>
+    </QtMoc>
+    <QtMoc Include="app\MainWin.h">
+      <Filter>app</Filter>
+    </QtMoc>
+    <QtMoc Include="app\MomoPlayer.h">
+      <Filter>app</Filter>
+    </QtMoc>
+    <QtMoc Include="player\DecodeWorker.h">
+      <Filter>player</Filter>
+    </QtMoc>
+    <QtMoc Include="player\PlayerControler.h">
+      <Filter>player</Filter>
+    </QtMoc>
+    <QtMoc Include="player\RenderWorker.h">
+      <Filter>player</Filter>
+    </QtMoc>
+    <QtMoc Include="..\common\Database.h">
+      <Filter>common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\common\GlobalConfig.h">
+      <Filter>common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\common\GlobalSignalSlot.h">
+      <Filter>common</Filter>
+    </QtMoc>
+    <QtMoc Include="..\common\CMessageBox\CConfirmBox.h">
+      <Filter>common\CMessageBox</Filter>
+    </QtMoc>
+    <QtMoc Include="..\common\CMessageBox\CInfoBox.h">
+      <Filter>common\CMessageBox</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\FramelessHelper\FramelessHelper_p.h">
+      <Filter>common\FramelessHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\FramelessHelper\Kernels\NativeWindowFilter.h">
+      <Filter>common\FramelessHelper\Kernels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\FramelessHelper\Kernels\NativeWindowFilter_p.h">
+      <Filter>common\FramelessHelper\Kernels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\FramelessHelper\Kernels\NativeWindowHelper_p.h">
+      <Filter>common\FramelessHelper\Kernels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Dump.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\GlobalDefine.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\log.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\util.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\VAUtil.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\CMessageBox\CMessageBox.h">
+      <Filter>common\CMessageBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\CMessageBox\IMessageBox.h">
+      <Filter>common\CMessageBox</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\image\MomoPlayer.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\common\FramelessHelper\FramelessHelper.pri">
+      <Filter>common\FramelessHelper</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="app\MainWin.ui">
+      <Filter>app</Filter>
+    </QtUic>
+    <QtUic Include="..\common\CMessageBox\CConfirmBox.ui">
+      <Filter>common\CMessageBox</Filter>
+    </QtUic>
+    <QtUic Include="..\common\CMessageBox\CInfoBox.ui">
+      <Filter>common\CMessageBox</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MomoPlayer.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
