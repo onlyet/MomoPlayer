@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../image/MomoPlayer.qrc">
-    <normaloff>:/logo.ico</normaloff>:/logo.ico</iconset>
+    <normaloff>:/logo1.png</normaloff>:/logo1.png</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -116,7 +116,10 @@
            <property name="styleSheet">
             <string notr="true">QLabel#logoLabel
 {
-	border-image: url(:/logo.ico);
+	
+	
+	border-image: url(:/logo4.png);
+	
 }</string>
            </property>
            <property name="text">

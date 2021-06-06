@@ -381,7 +381,7 @@ bool PlayerControler::allocFFFmpegResource()
     AVDictionary* options = nullptr;
     if (m_path.startsWith("rtsp"))
     {
-        av_dict_set(&options, "stimeout", "10000000", 0);   // 10秒，太小的话avformat_open_input会返回Operation not permitted
+        av_dict_set(&options, "stimeout", "3000000", 0);   // 10秒，太小的话avformat_open_input会返回Operation not permitted
         av_dict_set(&options, "max_delay", "100000", 0);    // 100毫秒
 
         if (CONFIG.isRtspOverTcp())

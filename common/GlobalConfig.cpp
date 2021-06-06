@@ -17,12 +17,13 @@
 GlobalConfig::GlobalConfig(QObject *parent)
 	: QObject(parent)
 {
+    m_appPath = QCoreApplication::applicationDirPath();
 }
 
 GlobalConfig::~GlobalConfig()
 {
     saveUserConfig();
-    saveAppConfig();
+    //saveAppConfig();
 }
 
 bool GlobalConfig::loadUserConfig()
@@ -54,6 +55,9 @@ bool GlobalConfig::loadUserConfig()
     }
 
     m_rtspUrl = setting.value(UserRtspUrl).toString();
+    m_rtspOverTcp = setting.value(RtspOverTcp, true).toBool();
+    m_reduceAnalyzeTime = setting.value(ReduceAnalyzeTime, true).toBool();
+    m_enableAudioStream = setting.value(EnableAudioStream, false).toBool();
     if (!isRecordDirExist(setting) || !isDiskSpaceEnough())
     {
         return false;
@@ -61,9 +65,10 @@ bool GlobalConfig::loadUserConfig()
     return true;
 }
 
+#if 0
 bool GlobalConfig::loadAppConfig()
 {
-    QString path = QString("%1/%2.ini").arg(QCoreApplication::applicationDirPath()).arg(QCoreApplication::applicationName());
+    QString path = QString("%1/%2.ini").arg(m_appPath).arg(QCoreApplication::applicationName());
     QSettings setting(path, QSettings::IniFormat);
     setting.setIniCodec("UTF-8");
     QFile file(path);
@@ -85,6 +90,7 @@ bool GlobalConfig::loadAppConfig()
 
     return true;
 }
+#endif
 
 
 bool GlobalConfig::saveUserConfig()
@@ -104,12 +110,18 @@ bool GlobalConfig::saveUserConfig()
     }
 
     setting.setValue(UserRtspUrl, m_rtspUrl);
+    setting.setValue(RecordPath, m_recordPath);
+    setting.setValue(RtspOverTcp, m_rtspOverTcp);
+    setting.setValue(ReduceAnalyzeTime, m_reduceAnalyzeTime);
+    setting.setValue(EnableAudioStream, m_enableAudioStream);
+    
     return true;
 }
 
+#if 0
 bool GlobalConfig::saveAppConfig()
 {
-    QString path = QString("%1/%2.ini").arg(QCoreApplication::applicationDirPath()).arg(QCoreApplication::applicationName());
+    QString path = QString("%1/%2.ini").arg(m_appPath).arg(QCoreApplication::applicationName());
     QSettings setting(path, QSettings::IniFormat);
     setting.setIniCodec("UTF-8");
     QFile file(path);
@@ -124,6 +136,7 @@ bool GlobalConfig::saveAppConfig()
 
     return true;
 }
+#endif
 
 bool GlobalConfig::isRecordDirExist(QSettings &setting)
 {
@@ -184,11 +197,12 @@ GlobalConfig& GlobalConfig::instance()
 
 bool GlobalConfig::init()
 {
-    if (!loadUserConfig())
-    {
-        return false;
-    }
-    return loadAppConfig();
+    //if (!loadUserConfig())
+    //{
+    //    return false;
+    //}
+    //return loadAppConfig();
+    return loadUserConfig();
 }
 
 QString GlobalConfig::rtspUrl() const

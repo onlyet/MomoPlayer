@@ -109,6 +109,11 @@ void MainWin::play()
     }
     else
     {
+        QString url = ui->rtspEdit->text();
+        if (!url.startsWith("rtsp://"))
+        {
+            return;
+        }
         ui->player->play(ui->rtspEdit->text());
     }
     ui->playBtn->hide();

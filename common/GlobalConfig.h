@@ -5,15 +5,15 @@
 
 /*-----------------------------------------------配置文件key-----------------------------------------*/
 // 常修改的
-#define RecordPath                      "Volatile/RecordPath"            // 录像保存路径
+#define UserRtspUrl                     "User/RtspUrl"
+#define RecordPath                      "User/RecordPath"            // 录像保存路径
 
-#define ReduceAnalyzeTime               "Common/ReduceAnalyzeTime"
-#define UseVectoredExceptionHandler     "Common/UseVectoredExceptionHandler"
-#define RtspOverTcp                     "Common/RtspOverTcp"
-#define EnableAudioStream               "Common/EnableAudioStream"
+#define ReduceAnalyzeTime               "App/ReduceAnalyzeTime"
+#define UseVectoredExceptionHandler     "App/UseVectoredExceptionHandler"
+#define RtspOverTcp                     "App/RtspOverTcp"
+#define EnableAudioStream               "App/EnableAudioStream"
 
 
-#define UserRtspUrl                     "RtspUrl"
 /*--------------------------------------------------------------------------------------------------*/
 
 
@@ -46,10 +46,10 @@ private:
 	~GlobalConfig();
 
     bool loadUserConfig();
-    bool loadAppConfig();
+    //bool loadAppConfig();
 
     bool saveUserConfig();
-    bool saveAppConfig();
+    //bool saveAppConfig();
 
     bool isRecordDirExist(QSettings &setting);
 
@@ -57,12 +57,15 @@ private:
     bool isDiskSpaceEnough();
 
 private:
-    bool        m_reduceAnalyzeTime;
-    bool        m_enableAudioStream;
+    QString     m_appPath;
+
+    QString     m_rtspUrl;
     QString		m_recordPath;               // 录制视频保存路径
     bool        m_recordEnabled = true;     // 是否允许录制视频
+
     bool        m_rtspOverTcp;
-    QString     m_rtspUrl;
+    bool        m_reduceAnalyzeTime;
+    bool        m_enableAudioStream;
 };
 
 #define CONFIG GlobalConfig::instance()

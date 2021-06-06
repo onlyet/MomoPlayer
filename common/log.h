@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <QThread>
 #include <QCoreApplication>
+#include <QStandardPaths>
+#include <CMessageBox.h>
 
 #include <sstream>
 
@@ -21,7 +23,11 @@ static QString s_LogVer = "0.0.0.0";
 
 static QString getLogFileName(const QString &fileName, quint32 idx = 0)
 {
+#if 0
 	QString exeDirPath = QCoreApplication::applicationDirPath();
+#endif
+    QString exeDirPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+
     if(idx == 0)
     {
         return QString("%1/%2/%3.log").arg(exeDirPath).arg(LogDirName).arg(fileName);
@@ -137,20 +143,41 @@ static void outputMessage(QtMsgType type, const QMessageLogContext &context, con
     writeLog(message);
 }
 
-void makeLogDir()
+bool makeLogDir()
 {
+#if 0
     QDir dir(QCoreApplication::applicationDirPath());
-	if (!dir.exists(LogDirName))
-	{
-		dir.mkdir(LogDirName);
-	}
+    if (!dir.exists(LogDirName))
+    {
+        dir.mkdir(LogDirName);
+    }
+#endif
+    QString dirPath = QString("%1/%2").arg(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation))
+        .arg(LogDirName);
+    QDir dir;
+    if (!dir.exists(LogDirName))
+    {
+        if (!dir.mkpath(dirPath))
+        {
+            QString msg = QStringLiteral("´´½¨Ä¿Â¼%1Ê§°Ü").arg(dirPath);
+            qInfo() << msg;
+            CMessageBox::info(msg);
+            return false;
+        }
+    }
+    return true;
 }
 
-void LogInit(const QString &logName = QString(), const QString &logVer = QString())
+bool LogInit(const QString &logName = QString(), const QString &logVer = QString())
 {
     if(!logName.isEmpty()) s_LogName = logName;
     if(!logVer.isEmpty()) s_LogVer = logVer;
-    makeLogDir();
+
+    if (!makeLogDir())
+    {
+        return false;
+    }
+
     qInstallMessageHandler(outputMessage);
 
     qInfo();qInfo();qInfo();
@@ -160,6 +187,7 @@ void LogInit(const QString &logName = QString(), const QString &logVer = QString
           qPrintable(logName), qPrintable(logVer));
 
     qDebug() << "Qt version: " << qVersion();
+    return true;
 }
 
 #endif // LOG_H
