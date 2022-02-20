@@ -505,7 +505,7 @@ bool PlayerControler::allocFFFmpegResource()
             m_inputStream = new InputStream();
             m_inputStream->hwaccel_id = HWACCEL_AUTO;
             m_inputStream->active_hwaccel_id = HWACCEL_AUTO;
-            m_inputStream->hwaccel_device = "dxva2";
+            m_inputStream->hwaccel_device = const_cast<char*>("dxva2");
             m_inputStream->dec = decoder;
             m_inputStream->dec_ctx = m_vDecodeCtx;
 
