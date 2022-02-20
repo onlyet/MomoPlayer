@@ -7,7 +7,7 @@
 #include <QPainter>
 
 MomoPlayer::MomoPlayer(QWidget *parent)
-    : QLabel(parent)
+    : QWidget(parent)
     //, m_pixmap(200, 200)
 {
     m_waitPic = ":/logo.png";
@@ -15,6 +15,8 @@ MomoPlayer::MomoPlayer(QWidget *parent)
     m_pixmap = m_waitPic;
     //m_pixmap.load(m_waitPic);
     qDebug() << "MomoPlayer()";
+
+    //ui->widget->
 }
 
 MomoPlayer::~MomoPlayer()

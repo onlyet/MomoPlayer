@@ -5,10 +5,12 @@
 #include <VAUtil.h>
 #include <GlobalDefine.h>
 #include <GlobalConfig.h>
+#include <ffmpeg_dxva2.h>
 
 #include <QDebug>
 #include <QThread>
 #include <QTime>
+#include <QWidget>
 
 extern "C"
 {
@@ -17,6 +19,23 @@ extern "C"
 }
 
 using namespace std;
+
+AVPixelFormat GetHwFormat(AVCodecContext *s, const AVPixelFormat *pix_fmts)
+{
+    PlayerControler* ctrl = (PlayerControler*)s->opaque;
+    if (nullptr == ctrl)
+    {
+        return AV_PIX_FMT_NONE;
+    }
+    InputStream *ist = ctrl->m_inputStream;
+    if (nullptr == ist)
+    {
+        return AV_PIX_FMT_NONE;
+    }
+    ist->active_hwaccel_id = HWACCEL_DXVA2;
+    ist->hwaccel_pix_fmt = AV_PIX_FMT_DXVA2_VLD;
+    return ist->hwaccel_pix_fmt;
+}
 
 PlayerControler::PlayerControler(QWidget *widget, QObject *parent)
     : QObject(parent)
@@ -30,9 +49,14 @@ PlayerControler::PlayerControler(QWidget *widget, QObject *parent)
     //connect(this, &PlayerControler::finished, m_thread, &QThread::quit);
     //connect(this, &PlayerControler::finished, this, &PlayerControler::deleteLater);
 
+
     m_decodeWorker = new DecodeWorker(this);
-    m_renderWorker = new RenderWorker(this);
-    connect(m_renderWorker, &RenderWorker::draw, this, &PlayerControler::draw);
+    m_enableDXVA = CONFIG.DXVAEnabled();
+    if (!m_enableDXVA)
+    {
+        m_renderWorker = new RenderWorker(this);
+        connect(m_renderWorker, &RenderWorker::draw, this, &PlayerControler::draw);
+    }
     qDebug() << "PlayerControler() 2";
 }
 
@@ -124,8 +148,14 @@ bool PlayerControler::openInput(const QString &path)
         return false;
     }
 
-    m_decodeWorker->start();
-    m_renderWorker->start();
+    if (m_decodeWorker)
+    {
+        m_decodeWorker->start();
+    }
+    if (m_renderWorker)
+    {
+        m_renderWorker->start();
+    }
 
     m_isOpened = true;
     qDebug() << QString("Open %1, time: %2ms").arg(m_path).arg(t.elapsed());
@@ -336,26 +366,26 @@ bool PlayerControler::decode(AVPacket *packet)
     {
         m_decodeFrame = av_frame_alloc();
     }
-    if (m_hwDecode)
+    if (m_enableDXVA)
     {
-        //while (ret >= 0)
-        //{
-        //    ret = avcodec_receive_frame(m_vDecodeCtx, m_pYuv);
-        //    if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
-        //    {
-        //        //qDebug() << "avcodec_receive_frame failed, " << parseError(ret);
-        //        return false;
+        while (ret >= 0)
+        {
+            ret = avcodec_receive_frame(m_vDecodeCtx, m_decodeFrame);
+            if (ret == AVERROR(EAGAIN) || ret == AVERROR_EOF)
+            {
+                //qDebug() << "avcodec_receive_frame failed, " << parseError(ret);
+                return false;
 
-        //    }
-        //    else if (ret < 0)
-        //    {
-        //        qDebug() << "avcodec_receive_frame failed, " << parseError(ret);
-        //        return ret;
-        //    }
+            }
+            else if (ret < 0)
+            {
+                qDebug() << "avcodec_receive_frame failed, " << VAUtil::parseErr(ret);
+                return ret;
+            }
 
-        //    //获取数据同时渲染
-        //    dxva2_retrieve_data_call(m_vDecodeCtx, m_pYuv);
-        //}
+            //获取数据同时渲染
+            dxva2_retrieve_data_call(m_vDecodeCtx, m_decodeFrame);
+        }
     }
     else
     {
@@ -457,8 +487,38 @@ bool PlayerControler::allocFFFmpegResource()
         // 尝试显示缩略图
         m_vDecodeCtx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 
-        if (m_hwDecode)
+        if (m_enableDXVA)
         {
+            if (NULL == m_widget->winId())
+            {
+                qDebug() << QStringLiteral("Window handle NUll, check code");
+                closeInput();
+                return false;
+            }
+
+            // dxva初始化需要，demo是（1920x1088）
+            m_vDecodeCtx->coded_width = m_vDecodeCtx->width;
+            m_vDecodeCtx->coded_height = m_vDecodeCtx->height;
+
+            m_vDecodeCtx->thread_count = 1;  // Multithreading is apparently not compatible with hardware decoding
+            // 不带括号会出错
+            m_inputStream = new InputStream();
+            m_inputStream->hwaccel_id = HWACCEL_AUTO;
+            m_inputStream->active_hwaccel_id = HWACCEL_AUTO;
+            m_inputStream->hwaccel_device = "dxva2";
+            m_inputStream->dec = decoder;
+            m_inputStream->dec_ctx = m_vDecodeCtx;
+
+            m_vDecodeCtx->opaque = this;
+            if (dxva2_init(m_vDecodeCtx, (HWND)m_widget->winId()) != 0)
+            {
+                qDebug() << "dxva2_init failed";
+                closeInput();
+                return false;
+            }
+            m_vDecodeCtx->get_buffer2 = m_inputStream->hwaccel_get_buffer;
+            m_vDecodeCtx->get_format = GetHwFormat;
+            m_vDecodeCtx->thread_safe_callbacks = 1;
         }
         else
         {
@@ -514,6 +574,21 @@ void PlayerControler::releaseFFmpegResource()
         {
             av_frame_free(&m_decodeFrame);
             m_decodeFrame = nullptr;
+        }
+    }
+
+    if (m_enableDXVA)
+    {
+        m_dxvaCbEnabled = false;
+
+        if (m_vDecodeCtx)
+        {
+            dxva2_uninit(m_vDecodeCtx);
+        }
+        if (m_inputStream)
+        {
+            delete m_inputStream;
+            m_inputStream = nullptr;
         }
     }
 }

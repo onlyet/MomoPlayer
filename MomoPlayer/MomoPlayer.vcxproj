@@ -185,10 +185,12 @@
     <ClCompile Include="app\MainWin.cpp" />
     <ClCompile Include="app\MomoPlayer.cpp" />
     <ClCompile Include="player\DecodeWorker.cpp" />
+    <ClCompile Include="player\ffmpeg_dxva2.cpp" />
     <ClCompile Include="player\PlayerControler.cpp" />
     <ClCompile Include="player\RenderWorker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="player\ffmpeg_dxva2.h" />
     <ClInclude Include="resource.h" />
     <QtMoc Include="..\common\CMessageBox\CConfirmBox.h" />
     <QtMoc Include="..\common\CMessageBox\CInfoBox.h" />

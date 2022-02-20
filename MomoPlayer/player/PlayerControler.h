@@ -5,11 +5,18 @@
 
 #include <atomic>
 
+//#include <D3D9Types.h>
+//#include <d3d9helper.h>
+
+#include <d3d9.h>
+
 class DecodeWorker;
 class RenderWorker;
 
 class QWidget;
 class QThread;
+
+class InputStream;
 
 extern "C"
 {
@@ -69,27 +76,34 @@ signals:
     void releaseFinished();
 
 private:
-    QString             m_path;
-    QThread             *m_thread = nullptr;
-    DecodeWorker        *m_decodeWorker = nullptr;
-    RenderWorker        *m_renderWorker = nullptr;
-    QWidget             *m_widget = nullptr;
+    QString                 m_path;
+    QThread                 *m_thread = nullptr;
+    DecodeWorker            *m_decodeWorker = nullptr;
+    RenderWorker            *m_renderWorker = nullptr;
+    QWidget                 *m_widget = nullptr;
 
-    AVFormatContext     *m_fmtCtx = nullptr;
-    AVCodecContext      *m_vDecodeCtx = nullptr;
-    SwsContext          *m_swsCtx = nullptr;
-    AVFrame             *m_decodeFrame = nullptr;         // 解码后的视频帧
-    QMutex              m_decodeFrameMtx;
-    //QMutex              m_mutex;                        // 互斥变量，多线程时避免同时间的读写AVFormatContext和AVCodecContext
+    AVFormatContext         *m_fmtCtx = nullptr;
+    AVCodecContext          *m_vDecodeCtx = nullptr;
+    SwsContext              *m_swsCtx = nullptr;
+    AVFrame                 *m_decodeFrame = nullptr;         // 解码后的视频帧
+    QMutex                  m_decodeFrameMtx;
+    //QMutex                  m_mutex;                        // 互斥变量，多线程时避免同时间的读写AVFormatContext和AVCodecContext
 
-    std::atomic_bool    m_isStopped{ true };
-    std::atomic_bool    m_canPlay{ true };               // 是否播放
-    std::atomic_bool    m_justPaused{ false };
+    std::atomic_bool        m_isStopped{ true };
+    std::atomic_bool        m_canPlay{ true };               // 是否播放
+    std::atomic_bool        m_justPaused{ false };
 
-    bool                m_hwDecode = false;
-    bool                m_isEof = false;                 // 是否读完;
-    double              m_fps = 0;                       // 视频流帧率
-    bool                m_isOpened = false;              // 是否已打开媒体
-    int                 m_videoStream = -1;              // 视频流index
+    bool                    m_isEof = false;                 // 是否读完;
+    double                  m_fps = 0;                       // 视频流帧率
+    bool                    m_isOpened = false;              // 是否已打开媒体
+    int                     m_videoStream = -1;              // 视频流index
 
+// dxva渲染添加
+public:
+    bool                    m_enableDXVA = false;
+    //HWND                    m_windowHandle;
+    D3DPRESENT_PARAMETERS   m_d3dpp = { 0 };
+    IDirect3DSurface9       *m_pBackBuffer = NULL;
+    InputStream             *m_inputStream = nullptr;
+    std::atomic<bool>       m_dxvaCbEnabled = true;     // 利用该标志位避免dxva2_release_buffer崩溃
 };

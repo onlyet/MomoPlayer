@@ -12,6 +12,7 @@
 #define UseVectoredExceptionHandler     "App/UseVectoredExceptionHandler"
 #define RtspOverTcp                     "App/RtspOverTcp"
 #define EnableAudioStream               "App/EnableAudioStream"
+#define EnableDXVA                      "App/EnableDXVA"
 
 
 /*--------------------------------------------------------------------------------------------------*/
@@ -40,6 +41,7 @@ public:
     void enableRecordVideo(bool enabled);
     bool recordVideoEnabled();
     bool isRtspOverTcp() const;
+    bool DXVAEnabled() const;
 
 private:
 	GlobalConfig(QObject *parent = Q_NULLPTR);
@@ -66,6 +68,7 @@ private:
     bool        m_rtspOverTcp;
     bool        m_reduceAnalyzeTime;
     bool        m_enableAudioStream;
+    bool        m_enableDXVA;
 };
 
 #define CONFIG GlobalConfig::instance()

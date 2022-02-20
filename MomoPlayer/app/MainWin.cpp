@@ -25,6 +25,10 @@ MainWin::MainWin(QWidget *parent)
     ui = new Ui::MainWin();
     ui->setupUi(this);
 
+    //ui->label_3->setAttribute(Qt::WA_TranslucentBackground);
+    //ui->label_3->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+
+
     FramelessHelper *helper = new FramelessHelper(this);
     helper->setDraggableMargins(6, 6, 6, 6);
     helper->setMaximizedMargins(3, 3, 3, 3);

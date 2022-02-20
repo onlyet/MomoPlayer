@@ -62,6 +62,8 @@ bool GlobalConfig::loadUserConfig()
     //{
     //    return false;
     //}
+    m_enableDXVA = setting.value(EnableDXVA, true).toBool();
+    //m_enableDXVA = false;
     return true;
 }
 
@@ -251,7 +253,7 @@ bool GlobalConfig::isDiskSpaceEnough()
     float total = (float)si.bytesTotal() / 1024 / 1024 / 1024;
     float percent = available / total;
     qInfo() << QStringLiteral("录制视频目录%1所在磁盘的可用空间为%2%").arg(m_recordPath).arg((int)(percent * 100));
-    if (percent <= 0.2)
+    if (/*percent <= 0.2*/0)
     {
         m_recordEnabled = false;
         CMessageBox::info(qstr("%1盘空间不足!\n清理磁盘或修改录制视频保存路径").arg(m_recordPath.left(1)));
@@ -263,4 +265,9 @@ bool GlobalConfig::isDiskSpaceEnough()
 bool GlobalConfig::isRtspOverTcp() const
 {
     return m_rtspOverTcp;
+}
+
+bool GlobalConfig::DXVAEnabled() const
+{
+    return m_enableDXVA;
 }

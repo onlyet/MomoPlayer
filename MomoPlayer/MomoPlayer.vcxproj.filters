@@ -84,6 +84,9 @@
     <ClCompile Include="..\common\CMessageBox\IMessageBox.cpp">
       <Filter>common\CMessageBox</Filter>
     </ClCompile>
+    <ClCompile Include="player\ffmpeg_dxva2.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="..\common\FramelessHelper\FramelessHelper.h">
@@ -158,6 +161,9 @@
       <Filter>common\CMessageBox</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="player\ffmpeg_dxva2.h">
+      <Filter>player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\image\MomoPlayer.qrc">

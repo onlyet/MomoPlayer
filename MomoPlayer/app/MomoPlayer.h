@@ -2,10 +2,11 @@
 
 #include <QLabel>
 #include <QPixmap>
+#include <QWidget>
 
 class PlayerControler;
 
-class MomoPlayer : public QLabel
+class MomoPlayer : public QWidget
 {
     Q_OBJECT
 

@@ -325,19 +325,36 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="MomoPlayer" name="player">
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="scaledContents">
-            <bool>true</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
+          <widget class="MomoPlayer" name="player" native="true">
+           <widget class="QWidget" name="widget" native="true">
+            <property name="geometry">
+             <rect>
+              <x>179</x>
+              <y>80</y>
+              <width>591</width>
+              <height>221</height>
+             </rect>
+            </property>
+            <widget class="QLabel" name="label_3">
+             <property name="geometry">
+              <rect>
+               <x>230</x>
+               <y>30</y>
+               <width>121</width>
+               <height>81</height>
+              </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel
+{
+	background:rgba(255,0,0,0.3);
+}</string>
+             </property>
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -500,8 +517,9 @@ QPushButton#stopBtn:hover
  <customwidgets>
   <customwidget>
    <class>MomoPlayer</class>
-   <extends>QLabel</extends>
+   <extends>QWidget</extends>
    <header>MomoPlayer.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
