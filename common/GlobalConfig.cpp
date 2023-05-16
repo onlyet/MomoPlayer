@@ -58,10 +58,10 @@ bool GlobalConfig::loadUserConfig()
     m_rtspOverTcp = setting.value(RtspOverTcp, true).toBool();
     m_reduceAnalyzeTime = setting.value(ReduceAnalyzeTime, true).toBool();
     m_enableAudioStream = setting.value(EnableAudioStream, false).toBool();
-    if (!isRecordDirExist(setting) || !isDiskSpaceEnough())
-    {
-        return false;
-    }
+    //if (!isRecordDirExist(setting) || !isDiskSpaceEnough())
+    //{
+    //    return false;
+    //}
     return true;
 }
 
