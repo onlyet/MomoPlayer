@@ -45,7 +45,7 @@ int GenerateMiniDump(PEXCEPTION_POINTERS pExceptionPointers)
     }
     // 创建 dmp 文件件
     TCHAR szFileName[MAX_PATH] = { 0 };
-    LPWSTR szVersion = L"DumpFile";
+    LPWSTR szVersion = const_cast<LPWSTR>(L"DumpFile");
     SYSTEMTIME stLocalTime;
     GetLocalTime(&stLocalTime);
     wsprintf(szFileName, _T("%s-%04d-%02d-%02d-%02d-%02d-%02d.dmp"),
