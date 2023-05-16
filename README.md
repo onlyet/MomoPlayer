@@ -28,10 +28,6 @@ windows平台，纯视频流播放，暂不支持音频。
 * Qt5.12.9
 * FFmpeg4.3.1 64位
 
-### 软件安装包
-[MoMoPlayer安装包](https://pan.baidu.com/s/1QLB-aK_1oHehK__cN50GTQ) 
-提取码：1lzc
-
 ### Features Snapshot Below：
 ### 效果图
 ![avatar](https://github.com/onlyet/MomoPlayer/blob/master/rtsp%E5%BB%B6%E8%BF%9F.png)
